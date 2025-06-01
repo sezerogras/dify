@@ -554,7 +554,7 @@ const translation = {
       vectorHash: 'Vektör Hash:',
       hitScore: 'Geri Alım Skoru:',
     },
-    inputPlaceholder: 'ThinkAI chat ile sohbet et',
+    inputPlaceholder: 'Marmus chat ile sohbet et',
     thought: 'Düşünce',
     thinking: 'Düşünü...',
     resend: 'Yeniden gönder',
