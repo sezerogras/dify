@@ -33,7 +33,7 @@ x-shared-env: &shared-api-worker-env
 services:
   # Frontend web application.
   web:
-    image: sezerogras/thinkai:1.4.0
+    image: sezerogras/thinkai:1.4.1
     restart: always
     platform: linux/amd64
     environment:
