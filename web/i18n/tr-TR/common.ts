@@ -623,7 +623,11 @@ const translation = {
       vectorHash: 'Vektör Hash:',
       hitScore: 'Geri Alım Skoru:',
     },
+<<<<<<< HEAD
     inputPlaceholder: '{{botName}} ile konuş',
+=======
+    inputPlaceholder: 'ThinkAI chat ile sohbet et',
+>>>>>>> 53560feaa (edit new text)
     thought: 'Düşünce',
     thinking: 'Düşünü...',
     resend: 'Yeniden gönder',
