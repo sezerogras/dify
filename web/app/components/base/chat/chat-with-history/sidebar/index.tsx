@@ -142,19 +142,15 @@ const Sidebar = ({ isPanel }: Props) => {
       <div className='flex shrink-0 items-center justify-between p-3'>
         <MenuDropdown hideLogout={isInstalledApp || accessMode === AccessMode.PUBLIC} placement='top-start' data={appData?.site} />
         {/* powered by */}
-        <div className='shrink-0'>
-          {!appData?.custom_config?.remove_webapp_brand && (
-            <div className={cn(
-              'flex shrink-0 items-center gap-1.5 px-1',
-            )}>
-              <div className='system-2xs-medium-uppercase text-text-tertiary'>{t('share.chat.poweredBy')}</div>
-              {systemFeatures.branding.enabled ? (
-                <img src={systemFeatures.branding.login_page_logo} alt='logo' className='block h-5 w-auto' />
-              ) : (
-                <DifyLogo size='small' />)
-              }
-            </div>
-          )}
+        <div className={cn(
+          'flex shrink-0 items-center gap-1.5 px-1',
+        )}>
+          {systemFeatures.branding.enabled ? (
+            <img src={systemFeatures.branding.login_page_logo} alt='logo' className='block h-5 w-auto' />
+          ) : (
+            <DifyLogo size='small' />)
+          }
+          <div className='system-1xs-medium-uppercase text-text-tertiary text-[8px]'>{t('share.chat.poweredBy')}</div>
         </div>
         {!!showConfirm && (
           <Confirm
