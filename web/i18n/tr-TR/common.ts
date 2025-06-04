@@ -196,7 +196,7 @@ const translation = {
     newPassword: 'Yeni şifre',
     confirmPassword: 'Şifreyi onayla',
     notEqual: 'İki şifre aynı değil.',
-    langGeniusAccount: 'Dify hesabı',
+    langGeniusAccount: 'ThinkSuite hesabı',
     langGeniusAccountTip: 'Dify hesabınız ve ilişkili kullanıcı verileri.',
     editName: 'İsmi Düzenle',
     showAppLength: '{{length}} uygulamayı göster',
@@ -204,7 +204,7 @@ const translation = {
     deleteTip: 'Hesabınızı silmek tüm verilerinizi kalıcı olarak siler ve geri alınamaz.',
     account: 'Hesap',
     myAccount: 'Hesabım',
-    studio: 'Dify Stüdyo',
+    studio: 'ThinkSuite Stüdyo',
     deleteSuccessTip: 'Hesabınızın silme işleminin tamamlanması için zamana ihtiyacı var. Her şey bittiğinde size e-posta göndereceğiz.',
     deletePrivacyLink: 'Gizlilik Politikası.',
     feedbackTitle: 'Geri besleme',
@@ -623,11 +623,7 @@ const translation = {
       vectorHash: 'Vektör Hash:',
       hitScore: 'Geri Alım Skoru:',
     },
-<<<<<<< HEAD
-    inputPlaceholder: '{{botName}} ile konuş',
-=======
-    inputPlaceholder: 'ThinkAI chat ile sohbet et',
->>>>>>> 53560feaa (edit new text)
+    inputPlaceholder: 'ThinkAI ile sohbet et',
     thought: 'Düşünce',
     thinking: 'Düşünü...',
     resend: 'Yeniden gönder',

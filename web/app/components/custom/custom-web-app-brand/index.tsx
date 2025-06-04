@@ -245,14 +245,11 @@ const CustomWebAppBrand = () => {
               <div className='flex items-center gap-1.5'>
                 {!webappBrandRemoved && (
                   <>
-                    <div className='system-2xs-medium-uppercase text-text-tertiary'>POWERED BY</div>
-                    {
-                      systemFeatures.branding.enabled && systemFeatures.branding.workspace_logo
-                        ? <img src={systemFeatures.branding.workspace_logo} alt='logo' className='block h-5 w-auto' />
-                        : webappLogo
-                          ? <img src={`${webappLogo}?hash=${imgKey}`} alt='logo' className='block h-5 w-auto' />
-                          : <DifyLogo size='small' />
+                    {webappLogo
+                      ? <img src={`${webappLogo}?hash=${imgKey}`} alt='logo' className='block h-5 w-auto' />
+                      : <DifyLogo size='small' />
                     }
+                    <div className='system-1xs-medium-uppercase text-text-tertiary text-[8px]'>POWERED BY</div>
                   </>
                 )}
               </div>
@@ -307,14 +304,11 @@ const CustomWebAppBrand = () => {
           <div className='flex h-12 shrink-0 items-center gap-1.5 bg-components-panel-bg p-4 pt-3'>
             {!webappBrandRemoved && (
               <>
-                <div className='system-2xs-medium-uppercase text-text-tertiary'>POWERED BY</div>
-                {
-                  systemFeatures.branding.enabled && systemFeatures.branding.workspace_logo
-                    ? <img src={systemFeatures.branding.workspace_logo} alt='logo' className='block h-5 w-auto' />
-                    : webappLogo
-                      ? <img src={`${webappLogo}?hash=${imgKey}`} alt='logo' className='block h-5 w-auto' />
-                      : <DifyLogo size='small' />
+                {webappLogo
+                  ? <img src={`${webappLogo}?hash=${imgKey}`} alt='logo' className='block h-5 w-auto' />
+                  : <DifyLogo size='small' />
                 }
+                <div className='system-4xs-medium-uppercase text-text-tertiary'>POWERED BY</div>
               </>
             )}
           </div>
