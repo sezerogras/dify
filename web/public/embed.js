@@ -25,7 +25,7 @@
 
 
   const originalIframeStyleText = `
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -47,7 +47,7 @@
   `
 
   const expandedIframeStyleText = `
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
