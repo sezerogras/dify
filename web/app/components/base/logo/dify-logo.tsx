@@ -1,51 +1,58 @@
-'use client'
-import type { FC } from 'react'
-import classNames from '@/utils/classnames'
-import useTheme from '@/hooks/use-theme'
-import { basePath } from '@/utils/var'
-import { useGlobalPublicStore } from '@/context/global-public-context'
-export type LogoStyle = 'default' | 'monochromeWhite'
+"use client";
+import { useGlobalPublicStore } from "@/context/global-public-context";
+import useTheme from "@/hooks/use-theme";
+import classNames from "@/utils/classnames";
+import { basePath } from "@/utils/var";
+import type { FC } from "react";
+export type LogoStyle = "default" | "monochromeWhite";
 
 export const logoPathMap: Record<LogoStyle, string> = {
-  default: '/logo/logo.svg',
-  monochromeWhite: '/logo/logo-monochrome-white.svg',
-}
+  default: "/logo/logo.svg",
+  monochromeWhite: "/logo/logo-monochrome-white.svg",
+};
 
-export type LogoSize = 'large' | 'medium' | 'small'
+export type LogoSize = "large" | "medium" | "small";
 
 export const logoSizeMap: Record<LogoSize, string> = {
-  large: 'w-16 h-7',
-  medium: 'w-12 h-[22px]',
-  small: 'w-9 h-4',
-}
+  large: "w-16 h-7",
+  medium: "w-12 h-[22px]",
+  small: "w-9 h-4",
+};
 
 type DifyLogoProps = {
-  style?: LogoStyle
-  size?: LogoSize
-  className?: string
-}
+  style?: LogoStyle;
+  size?: LogoSize;
+  className?: string;
+};
 
 const DifyLogo: FC<DifyLogoProps> = ({
-  style = 'default',
-  size = 'medium',
+  style = "default",
+  size = "medium",
   className,
 }) => {
-  const { theme } = useTheme()
-  const themedStyle = (theme === 'dark' && style === 'default') ? 'monochromeWhite' : style
-  const { systemFeatures } = useGlobalPublicStore()
-  const hasBrandingLogo = Boolean(systemFeatures.branding.enabled && systemFeatures.branding.workspace_logo)
+  const { theme } = useTheme();
+  const themedStyle =
+    theme === "dark" && style === "default" ? "monochromeWhite" : style;
+  const { systemFeatures } = useGlobalPublicStore();
+  const hasBrandingLogo = Boolean(
+    systemFeatures.branding.enabled && systemFeatures.branding.workspace_logo
+  );
 
-  let src = `${basePath}${logoPathMap[themedStyle]}`
-  if (hasBrandingLogo)
-    src = systemFeatures.branding.workspace_logo
+  let src = `${basePath}${logoPathMap[themedStyle]}`;
+  if (hasBrandingLogo) src = systemFeatures.branding.workspace_logo;
 
   return (
     <img
       src={src}
-      className={classNames('block object-contain', logoSizeMap[size], hasBrandingLogo && 'w-auto', className)}
-      alt={hasBrandingLogo ? 'Logo' : 'Dify logo'}
+      className={classNames(
+        "block object-contain",
+        logoSizeMap[size],
+        hasBrandingLogo && "w-auto",
+        className
+      )}
+      alt={hasBrandingLogo ? "Logo" : "Dify logo"}
     />
-  )
-}
+  );
+};
 
-export default DifyLogo
+export default DifyLogo;
