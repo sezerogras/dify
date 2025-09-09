@@ -255,12 +255,9 @@ const Chat: FC<ChatProps> = ({
         <div
           ref={chatContainerRef}
           className={cn(
-            "relative h-full overflow-y-auto overflow-x-hidden bg-cover bg-no-repeat bg-center",
+            "relative h-full overflow-y-auto overflow-x-hidden",
             chatContainerClassName
           )}
-          style={{
-            backgroundImage: "url(/education/chatbot-bg.png)",
-          }}
         >
           {chatNode}
           <div
@@ -306,7 +303,7 @@ const Chat: FC<ChatProps> = ({
           </div>
         </div>
         <div
-          className={`absolute bottom-0 flex justify-center ${
+          className={`fixed bottom-0 flex justify-center ${
             (hasTryToAsk || !noChatInput || !noStopResponding) &&
             chatFooterClassName
           }`}

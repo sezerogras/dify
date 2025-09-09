@@ -181,7 +181,7 @@ const Operation: FC<OperationProps> = ({
           config?.supportFeedback &&
           !localFeedback?.rating &&
           onFeedback && (
-            <div className="ml-1 hidden items-center gap-0.5 rounded-[10px] border-[0.5px] border-components-actionbar-border bg-components-actionbar-bg p-0.5 shadow-md backdrop-blur-sm group-hover:flex">
+            <div className="ml-1 hidden items-center gap-0.5 rounded-[10px] border-[0.5px] border-components-actionbar-border bg-black p-0.5 shadow-md backdrop-blur-sm group-hover:flex">
               {!localFeedback?.rating && (
                 <>
                   <ActionButton onClick={() => handleFeedback("like")}>

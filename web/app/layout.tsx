@@ -1,32 +1,28 @@
-import RoutePrefixHandle from './routePrefixHandle'
-import type { Viewport } from 'next'
-import I18nServer from './components/i18n-server'
-import BrowserInitor from './components/browser-initor'
-import SentryInitor from './components/sentry-initor'
-import { getLocaleOnServer } from '@/i18n/server'
-import { TanstackQueryIniter } from '@/context/query-client'
-import { ThemeProvider } from 'next-themes'
-import './styles/globals.css'
-import './styles/markdown.scss'
-import GlobalPublicStoreProvider from '@/context/global-public-context'
+import GlobalPublicStoreProvider from "@/context/global-public-context";
+import { TanstackQueryIniter } from "@/context/query-client";
+import { getLocaleOnServer } from "@/i18n/server";
+import type { Viewport } from "next";
+import { ThemeProvider } from "next-themes";
+import BrowserInitor from "./components/browser-initor";
+import I18nServer from "./components/i18n-server";
+import SentryInitor from "./components/sentry-initor";
+import RoutePrefixHandle from "./routePrefixHandle";
+import "./styles/globals.css";
+import "./styles/markdown.scss";
 
 export const viewport: Viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  viewportFit: 'cover',
+  viewportFit: "cover",
   userScalable: false,
-}
+};
 
-const LocaleLayout = async ({
-  children,
-}: {
-  children: React.ReactNode
-}) => {
-  const locale = await getLocaleOnServer()
+const LocaleLayout = async ({ children }: { children: React.ReactNode }) => {
+  const locale = await getLocaleOnServer();
 
   return (
-    <html lang={locale ?? 'en'} className="h-full" suppressHydrationWarning>
+    <html lang={locale ?? "en"} className="h-full" suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#FFFFFF" />
         <meta name="mobile-web-app-capable" content="yes" />
@@ -37,31 +33,54 @@ const LocaleLayout = async ({
         className="color-scheme h-full select-auto"
         data-api-prefix={process.env.NEXT_PUBLIC_API_PREFIX}
         data-pubic-api-prefix={process.env.NEXT_PUBLIC_PUBLIC_API_PREFIX}
-        data-marketplace-api-prefix={process.env.NEXT_PUBLIC_MARKETPLACE_API_PREFIX}
-        data-marketplace-url-prefix={process.env.NEXT_PUBLIC_MARKETPLACE_URL_PREFIX}
+        data-marketplace-api-prefix={
+          process.env.NEXT_PUBLIC_MARKETPLACE_API_PREFIX
+        }
+        data-marketplace-url-prefix={
+          process.env.NEXT_PUBLIC_MARKETPLACE_URL_PREFIX
+        }
         data-public-edition={process.env.NEXT_PUBLIC_EDITION}
-        data-public-support-mail-login={process.env.NEXT_PUBLIC_SUPPORT_MAIL_LOGIN}
+        data-public-support-mail-login={
+          process.env.NEXT_PUBLIC_SUPPORT_MAIL_LOGIN
+        }
         data-public-sentry-dsn={process.env.NEXT_PUBLIC_SENTRY_DSN}
-        data-public-maintenance-notice={process.env.NEXT_PUBLIC_MAINTENANCE_NOTICE}
+        data-public-maintenance-notice={
+          process.env.NEXT_PUBLIC_MAINTENANCE_NOTICE
+        }
         data-public-site-about={process.env.NEXT_PUBLIC_SITE_ABOUT}
-        data-public-text-generation-timeout-ms={process.env.NEXT_PUBLIC_TEXT_GENERATION_TIMEOUT_MS}
+        data-public-text-generation-timeout-ms={
+          process.env.NEXT_PUBLIC_TEXT_GENERATION_TIMEOUT_MS
+        }
         data-public-max-tools-num={process.env.NEXT_PUBLIC_MAX_TOOLS_NUM}
-        data-public-max-parallel-limit={process.env.NEXT_PUBLIC_MAX_PARALLEL_LIMIT}
+        data-public-max-parallel-limit={
+          process.env.NEXT_PUBLIC_MAX_PARALLEL_LIMIT
+        }
         data-public-top-k-max-value={process.env.NEXT_PUBLIC_TOP_K_MAX_VALUE}
-        data-public-indexing-max-segmentation-tokens-length={process.env.NEXT_PUBLIC_INDEXING_MAX_SEGMENTATION_TOKENS_LENGTH}
-        data-public-loop-node-max-count={process.env.NEXT_PUBLIC_LOOP_NODE_MAX_COUNT}
-        data-public-max-iterations-num={process.env.NEXT_PUBLIC_MAX_ITERATIONS_NUM}
-        data-public-enable-website-jinareader={process.env.NEXT_PUBLIC_ENABLE_WEBSITE_JINAREADER}
-        data-public-enable-website-firecrawl={process.env.NEXT_PUBLIC_ENABLE_WEBSITE_FIRECRAWL}
-        data-public-enable-website-watercrawl={process.env.NEXT_PUBLIC_ENABLE_WEBSITE_WATERCRAWL}
+        data-public-indexing-max-segmentation-tokens-length={
+          process.env.NEXT_PUBLIC_INDEXING_MAX_SEGMENTATION_TOKENS_LENGTH
+        }
+        data-public-loop-node-max-count={
+          process.env.NEXT_PUBLIC_LOOP_NODE_MAX_COUNT
+        }
+        data-public-max-iterations-num={
+          process.env.NEXT_PUBLIC_MAX_ITERATIONS_NUM
+        }
+        data-public-enable-website-jinareader={
+          process.env.NEXT_PUBLIC_ENABLE_WEBSITE_JINAREADER
+        }
+        data-public-enable-website-firecrawl={
+          process.env.NEXT_PUBLIC_ENABLE_WEBSITE_FIRECRAWL
+        }
+        data-public-enable-website-watercrawl={
+          process.env.NEXT_PUBLIC_ENABLE_WEBSITE_WATERCRAWL
+        }
       >
         <BrowserInitor>
           <SentryInitor>
             <TanstackQueryIniter>
               <ThemeProvider
-                attribute='data-theme'
-                defaultTheme='system'
-                enableSystem
+                attribute="data-theme"
+                defaultTheme="dark"
                 disableTransitionOnChange
               >
                 <I18nServer>
@@ -76,7 +95,7 @@ const LocaleLayout = async ({
         <RoutePrefixHandle />
       </body>
     </html>
-  )
-}
+  );
+};
 
-export default LocaleLayout
+export default LocaleLayout;

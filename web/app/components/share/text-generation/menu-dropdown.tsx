@@ -1,62 +1,62 @@
-'use client'
-import type { FC } from 'react'
-import React, { useCallback, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import type { Placement } from '@floating-ui/react'
-import {
-  RiEqualizer2Line,
-} from '@remixicon/react'
-import { useRouter } from 'next/navigation'
-import Divider from '../../base/divider'
-import { removeAccessToken } from '../utils'
-import InfoModal from './info-modal'
-import ActionButton from '@/app/components/base/action-button'
+"use client";
+import ActionButton from "@/app/components/base/action-button";
 import {
   PortalToFollowElem,
   PortalToFollowElemContent,
   PortalToFollowElemTrigger,
-} from '@/app/components/base/portal-to-follow-elem'
-import ThemeSwitcher from '@/app/components/base/theme-switcher'
-import type { SiteInfo } from '@/models/share'
-import cn from '@/utils/classnames'
+} from "@/app/components/base/portal-to-follow-elem";
+import ThemeSwitcher from "@/app/components/base/theme-switcher";
+import useTheme from "@/hooks/use-theme";
+import type { SiteInfo } from "@/models/share";
+import { Theme } from "@/types/app";
+import cn from "@/utils/classnames";
+import type { Placement } from "@floating-ui/react";
+import { RiEqualizer2Line } from "@remixicon/react";
+import { useRouter } from "next/navigation";
+import type { FC } from "react";
+import React, { useCallback, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import Divider from "../../base/divider";
+import { removeAccessToken } from "../utils";
+import InfoModal from "./info-modal";
 
 type Props = {
-  data?: SiteInfo
-  placement?: Placement
-  hideLogout?: boolean
-}
+  data?: SiteInfo;
+  placement?: Placement;
+  hideLogout?: boolean;
+};
 
-const MenuDropdown: FC<Props> = ({
-  data,
-  placement,
-  hideLogout,
-}) => {
-  const router = useRouter()
-  const { t } = useTranslation()
-  const [open, doSetOpen] = useState(false)
-  const openRef = useRef(open)
-  const setOpen = useCallback((v: boolean) => {
-    doSetOpen(v)
-    openRef.current = v
-  }, [doSetOpen])
+const MenuDropdown: FC<Props> = ({ data, placement, hideLogout }) => {
+  const router = useRouter();
+  const { t } = useTranslation();
+  const { theme } = useTheme();
+  const [open, doSetOpen] = useState(false);
+  const openRef = useRef(open);
+  const setOpen = useCallback(
+    (v: boolean) => {
+      doSetOpen(v);
+      openRef.current = v;
+    },
+    [doSetOpen]
+  );
 
   const handleTrigger = useCallback(() => {
-    setOpen(!openRef.current)
-  }, [setOpen])
+    setOpen(!openRef.current);
+  }, [setOpen]);
 
   const handleLogout = useCallback(() => {
-    removeAccessToken()
-    router.replace(`/webapp-signin?redirect_url=${window.location.href}`)
-  }, [router])
+    removeAccessToken();
+    router.replace(`/webapp-signin?redirect_url=${window.location.href}`);
+  }, [router]);
 
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
 
   return (
     <>
       <PortalToFollowElem
         open={open}
         onOpenChange={setOpen}
-        placement={placement || 'bottom-end'}
+        placement={placement || "bottom-end"}
         offset={{
           mainAxis: 4,
           crossAxis: -4,
@@ -64,33 +64,52 @@ const MenuDropdown: FC<Props> = ({
       >
         <PortalToFollowElemTrigger onClick={handleTrigger}>
           <div>
-            <ActionButton size='l' className={cn(open && 'bg-state-base-hover')}>
-              <RiEqualizer2Line className='h-[18px] w-[18px]' />
+            <ActionButton
+              size="l"
+              className={cn(open && "bg-state-base-hover")}
+            >
+              <RiEqualizer2Line
+                className={`h-[18px] w-[18px] ${
+                  theme === Theme.light ? "text-black" : "text-white"
+                }`}
+              />
             </ActionButton>
           </div>
         </PortalToFollowElemTrigger>
-        <PortalToFollowElemContent className='z-50'>
-          <div className='w-[224px] rounded-xl border-[0.5px] border-components-panel-border bg-components-panel-bg-blur shadow-lg backdrop-blur-sm'>
-            <div className='p-1'>
-              <div className={cn('system-md-regular flex cursor-pointer items-center rounded-lg py-1.5 pl-3 pr-2 text-text-secondary')}>
-                <div className='grow'>{t('common.theme.theme')}</div>
+        <PortalToFollowElemContent className="z-50">
+          <div className="w-[224px] rounded-xl border-[0.5px] border-components-panel-border bg-components-panel-bg-blur shadow-lg backdrop-blur-sm">
+            <div className="p-1">
+              <div
+                className={cn(
+                  "system-md-regular flex cursor-pointer items-center rounded-lg py-1.5 pl-3 pr-2 text-text-secondary"
+                )}
+              >
+                <div className="grow">{t("common.theme.theme")}</div>
                 <ThemeSwitcher />
               </div>
             </div>
-            <Divider type='horizontal' className='my-0' />
-            <div className='p-1'>
+            <Divider type="horizontal" className="my-0" />
+            <div className="p-1">
               {data?.privacy_policy && (
-                <a href={data.privacy_policy} target='_blank' className='system-md-regular flex cursor-pointer items-center rounded-lg px-3 py-1.5 text-text-secondary hover:bg-state-base-hover'>
-                  <span className='grow'>{t('share.chat.privacyPolicyMiddle')}</span>
+                <a
+                  href={data.privacy_policy}
+                  target="_blank"
+                  className="system-md-regular flex cursor-pointer items-center rounded-lg px-3 py-1.5 text-text-secondary hover:bg-state-base-hover"
+                >
+                  <span className="grow">
+                    {t("share.chat.privacyPolicyMiddle")}
+                  </span>
                 </a>
               )}
               <div
                 onClick={() => {
-                  handleTrigger()
-                  setShow(true)
+                  handleTrigger();
+                  setShow(true);
                 }}
-                className='system-md-regular cursor-pointer rounded-lg px-3 py-1.5 text-text-secondary hover:bg-state-base-hover'
-              >{t('common.userProfile.about')}</div>
+                className="system-md-regular cursor-pointer rounded-lg px-3 py-1.5 text-text-secondary hover:bg-state-base-hover"
+              >
+                {t("common.userProfile.about")}
+              </div>
             </div>
           </div>
         </PortalToFollowElemContent>
@@ -99,12 +118,12 @@ const MenuDropdown: FC<Props> = ({
         <InfoModal
           isShow={show}
           onClose={() => {
-            setShow(false)
+            setShow(false);
           }}
           data={data}
         />
       )}
     </>
-  )
-}
-export default React.memo(MenuDropdown)
+  );
+};
+export default React.memo(MenuDropdown);

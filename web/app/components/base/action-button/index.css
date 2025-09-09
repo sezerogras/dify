@@ -2,7 +2,7 @@
 
 @layer components {
   .action-btn {
-    @apply inline-flex justify-center items-center cursor-pointer text-white hover:text-text-secondary hover:bg-state-base-hover;
+    @apply inline-flex justify-center items-center cursor-pointer text-white;
   }
 
   .action-btn-hover {

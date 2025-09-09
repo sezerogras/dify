@@ -1,33 +1,31 @@
-import {
-  useCallback,
-  useState,
-} from 'react'
-import { useTranslation } from 'react-i18next'
+import ActionButton from "@/app/components/base/action-button";
+import AppIcon from "@/app/components/base/app-icon";
+import Button from "@/app/components/base/button";
+import List from "@/app/components/base/chat/chat-with-history/sidebar/list";
+import RenameModal from "@/app/components/base/chat/chat-with-history/sidebar/rename-modal";
+import Confirm from "@/app/components/base/confirm";
+import MenuDropdown from "@/app/components/share/text-generation/menu-dropdown";
+import { useGlobalPublicStore } from "@/context/global-public-context";
+import useTheme from "@/hooks/use-theme";
+import { AccessMode } from "@/models/access-control";
+import type { ConversationItem } from "@/models/share";
+import { Theme } from "@/types/app";
+import cn from "@/utils/classnames";
 import {
   RiEditBoxLine,
   RiExpandRightLine,
   RiLayoutLeft2Line,
-} from '@remixicon/react'
-import { useChatWithHistoryContext } from '../context'
-import AppIcon from '@/app/components/base/app-icon'
-import ActionButton from '@/app/components/base/action-button'
-import Button from '@/app/components/base/button'
-import List from '@/app/components/base/chat/chat-with-history/sidebar/list'
-import MenuDropdown from '@/app/components/share/text-generation/menu-dropdown'
-import Confirm from '@/app/components/base/confirm'
-import RenameModal from '@/app/components/base/chat/chat-with-history/sidebar/rename-modal'
-import DifyLogo from '@/app/components/base/logo/dify-logo'
-import type { ConversationItem } from '@/models/share'
-import cn from '@/utils/classnames'
-import { AccessMode } from '@/models/access-control'
-import { useGlobalPublicStore } from '@/context/global-public-context'
+} from "@remixicon/react";
+import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useChatWithHistoryContext } from "../context";
 
 type Props = {
-  isPanel?: boolean
-}
+  isPanel?: boolean;
+};
 
 const Sidebar = ({ isPanel }: Props) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const {
     isInstalledApp,
     accessMode,
@@ -46,82 +44,107 @@ const Sidebar = ({ isPanel }: Props) => {
     handleSidebarCollapse,
     isMobile,
     isResponding,
-  } = useChatWithHistoryContext()
-  const isSidebarCollapsed = sidebarCollapseState
-  const systemFeatures = useGlobalPublicStore(s => s.systemFeatures)
-  const [showConfirm, setShowConfirm] = useState<ConversationItem | null>(null)
-  const [showRename, setShowRename] = useState<ConversationItem | null>(null)
+  } = useChatWithHistoryContext();
+  const isSidebarCollapsed = sidebarCollapseState;
+  const systemFeatures = useGlobalPublicStore((s) => s.systemFeatures);
+  const [showConfirm, setShowConfirm] = useState<ConversationItem | null>(null);
+  const [showRename, setShowRename] = useState<ConversationItem | null>(null);
+  const { theme } = useTheme();
 
-  const handleOperate = useCallback((type: string, item: ConversationItem) => {
-    if (type === 'pin')
-      handlePinConversation(item.id)
+  const handleOperate = useCallback(
+    (type: string, item: ConversationItem) => {
+      if (type === "pin") handlePinConversation(item.id);
 
-    if (type === 'unpin')
-      handleUnpinConversation(item.id)
+      if (type === "unpin") handleUnpinConversation(item.id);
 
-    if (type === 'delete')
-      setShowConfirm(item)
+      if (type === "delete") setShowConfirm(item);
 
-    if (type === 'rename')
-      setShowRename(item)
-  }, [handlePinConversation, handleUnpinConversation])
+      if (type === "rename") setShowRename(item);
+    },
+    [handlePinConversation, handleUnpinConversation]
+  );
   const handleCancelConfirm = useCallback(() => {
-    setShowConfirm(null)
-  }, [])
+    setShowConfirm(null);
+  }, []);
   const handleDelete = useCallback(() => {
     if (showConfirm)
-      handleDeleteConversation(showConfirm.id, { onSuccess: handleCancelConfirm })
-  }, [showConfirm, handleDeleteConversation, handleCancelConfirm])
+      handleDeleteConversation(showConfirm.id, {
+        onSuccess: handleCancelConfirm,
+      });
+  }, [showConfirm, handleDeleteConversation, handleCancelConfirm]);
   const handleCancelRename = useCallback(() => {
-    setShowRename(null)
-  }, [])
-  const handleRename = useCallback((newName: string) => {
-    if (showRename)
-      handleRenameConversation(showRename.id, newName, { onSuccess: handleCancelRename })
-  }, [showRename, handleRenameConversation, handleCancelRename])
+    setShowRename(null);
+  }, []);
+  const handleRename = useCallback(
+    (newName: string) => {
+      if (showRename)
+        handleRenameConversation(showRename.id, newName, {
+          onSuccess: handleCancelRename,
+        });
+    },
+    [showRename, handleRenameConversation, handleCancelRename]
+  );
 
   return (
-    <div className={cn(
-      'flex w-full grow flex-col',
-      isPanel && 'rounded-xl border-[0.5px] border-components-panel-border-subtle bg-components-panel-bg shadow-lg',
-    )}>
-      <div className={cn(
-        'flex shrink-0 items-center gap-3 p-3 pr-2',
-      )}>
-        <div className='shrink-0'>
+    <div
+      className={cn(
+        "flex w-full grow flex-col",
+        isPanel &&
+          "rounded-xl border-[0.5px] border-components-panel-border-subtle bg-components-panel-bg shadow-lg"
+      )}
+    >
+      <div className={cn("flex shrink-0 items-center gap-3 p-3 pr-2")}>
+        <div className="shrink-0">
           <AppIcon
-            size='large'
+            size="large"
             iconType={appData?.site.icon_type}
             icon={appData?.site.icon}
             background={appData?.site.icon_background}
             imageUrl={appData?.site.icon_url}
           />
         </div>
-        <div className={cn('system-md-semibold grow truncate text-text-secondary')}>{appData?.site.title}</div>
+        <div
+          className={cn("system-md-semibold grow truncate text-text-secondary")}
+        >
+          {appData?.site.title}
+        </div>
         {!isMobile && isSidebarCollapsed && (
-          <ActionButton size='l' onClick={() => handleSidebarCollapse(false)}>
-            <RiExpandRightLine className='h-[18px] w-[18px]' />
+          <ActionButton size="l" onClick={() => handleSidebarCollapse(false)}>
+            <RiExpandRightLine
+              className={`h-[18px] w-[18px] ${
+                theme === Theme.light ? "text-black" : "text-white"
+              }`}
+            />
           </ActionButton>
         )}
         {!isMobile && !isSidebarCollapsed && (
-          <ActionButton size='l' onClick={() => handleSidebarCollapse(true)}>
-            <RiLayoutLeft2Line className='h-[18px] w-[18px]' />
+          <ActionButton size="l" onClick={() => handleSidebarCollapse(true)}>
+            <RiLayoutLeft2Line
+              className={`h-[18px] w-[18px] ${
+                theme === Theme.light ? "text-black" : "text-white"
+              }`}
+            />
           </ActionButton>
         )}
       </div>
-      <div className='shrink-0 px-3 py-4'>
-        <Button variant='secondary-accent' disabled={isResponding} className='w-full justify-center' onClick={handleNewConversation}>
-          <RiEditBoxLine className='mr-1 h-4 w-4' />
-          {t('share.chat.newChat')}
+      <div className="shrink-0 px-3 py-4">
+        <Button
+          variant="secondary-accent"
+          disabled={isResponding}
+          className="w-full justify-center"
+          onClick={handleNewConversation}
+        >
+          <RiEditBoxLine className="mr-1 h-4 w-4" />
+          {t("share.chat.newChat")}
         </Button>
       </div>
-      <div className='h-0 grow space-y-2 overflow-y-auto px-3 pt-4'>
+      <div className="h-0 grow space-y-2 overflow-y-auto px-3 pt-4">
         {/* pinned list */}
         {!!pinnedConversationList.length && (
-          <div className='mb-4'>
+          <div className="mb-4">
             <List
               isPin
-              title={t('share.chat.pinnedTitle') || ''}
+              title={t("share.chat.pinnedTitle") || ""}
               list={pinnedConversationList}
               onChangeConversation={handleChangeConversation}
               onOperate={handleOperate}
@@ -131,7 +154,11 @@ const Sidebar = ({ isPanel }: Props) => {
         )}
         {!!conversationList.length && (
           <List
-            title={(pinnedConversationList.length && t('share.chat.unpinnedTitle')) || ''}
+            title={
+              (pinnedConversationList.length &&
+                t("share.chat.unpinnedTitle")) ||
+              ""
+            }
             list={conversationList}
             onChangeConversation={handleChangeConversation}
             onOperate={handleOperate}
@@ -139,23 +166,27 @@ const Sidebar = ({ isPanel }: Props) => {
           />
         )}
       </div>
-      <div className='flex shrink-0 items-center justify-between p-3'>
-        <MenuDropdown hideLogout={isInstalledApp || accessMode === AccessMode.PUBLIC} placement='top-start' data={appData?.site} />
+      <div className="flex shrink-0 items-center p-3">
+        <MenuDropdown
+          hideLogout={isInstalledApp || accessMode === AccessMode.PUBLIC}
+          placement="top-start"
+          data={appData?.site}
+        />
         {/* powered by */}
-        <div className={cn(
-          'flex shrink-0 items-center gap-1.5 px-1',
-        )}>
-          {systemFeatures.branding.enabled ? (
+        <div className={cn("flex shrink-0 items-center gap-1.5 px-1")}>
+          {/* {systemFeatures.branding.enabled ? (
             <img src={systemFeatures.branding.login_page_logo} alt='logo' className='block h-5 w-auto' />
           ) : (
             <DifyLogo size='small' />)
-          }
-          <div className='system-1xs-medium-uppercase text-text-tertiary text-[8px]'>{t('share.chat.poweredBy')}</div>
+          } */}
+          <div className="system-1xs-medium-uppercase text-text-tertiary text-[14px]">
+            {t("share.chat.poweredBy")}
+          </div>
         </div>
         {!!showConfirm && (
           <Confirm
-            title={t('share.chat.deleteConversation.title')}
-            content={t('share.chat.deleteConversation.content') || ''}
+            title={t("share.chat.deleteConversation.title")}
+            content={t("share.chat.deleteConversation.content") || ""}
             isShow
             onCancel={handleCancelConfirm}
             onConfirm={handleDelete}
@@ -166,13 +197,13 @@ const Sidebar = ({ isPanel }: Props) => {
             isShow
             onClose={handleCancelRename}
             saveLoading={conversationRenaming}
-            name={showRename?.name || ''}
+            name={showRename?.name || ""}
             onSave={handleRename}
           />
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
